@@ -1,23 +1,25 @@
-package org.usfirst.frc.team694.robot.commands;
+package org.usfirst.frc.team694.robot.commands.auton;
 
 import org.usfirst.frc.team694.robot.Robot;
 
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class ArmDeacquireCommand extends Command {
+public class DriveWithRampingUpSecondsCommand extends Command {
 
-    public ArmDeacquireCommand() {
-        requires(Robot.arm);
+    protected PIDController speedPIDController;
+	
+    public DriveWithRampingUpSecondsCommand() {
+        requires(Robot.drivetrain);        
     }
 
     protected void initialize() {
     }
 
     protected void execute() {
-    		Robot.arm.setSpeed(-1);
     }
 
     protected boolean isFinished() {
@@ -25,7 +27,6 @@ public class ArmDeacquireCommand extends Command {
     }
 
     protected void end() {
-    		Robot.arm.setSpeed(0);
     }
 
     protected void interrupted() {

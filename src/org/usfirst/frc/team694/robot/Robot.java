@@ -10,23 +10,45 @@ package org.usfirst.frc.team694.robot;
 import org.usfirst.frc.team694.robot.subsystems.Arm;
 import org.usfirst.frc.team694.robot.subsystems.Drivetrain;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 public class Robot extends TimedRobot {
+	
+    private static Robot myInstance;
 
 	public static Drivetrain drivetrain;
 	public static Arm arm;
 
 	public static OI oi;
+	
+	private String gameData;
+    private static boolean isRobotOnRight;
+    private static boolean isAllianceSwitchRight;
+    private static boolean isScaleRight;
+
+    private static SendableChooser<Command> autonChooser = new SendableChooser<>();
+    private static SendableChooser<RobotStartPosition> sideChooser = new SendableChooser<>();
+
+    private Command autonCommand; 
+    
 	@Override
 	public void robotInit() {
 		drivetrain = new Drivetrain();
 		arm = new Arm();
 	}
+	
+	public enum RobotStartPosition {
+		RIGHT_SIDE_OF_DRIVER, LEFT_SIDE_OF_DRIVER
+	}
 
 	@Override
 	public void disabledInit() {
+		Scheduler.getInstance().removeAll();
 	}
 
 	@Override
@@ -36,7 +58,31 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void autonomousInit() {
+		Scheduler.getInstance().removeAll();
 		
+		gameData = null;
+
+        double timestamp = Timer.getFPGATimestamp();
+        while ((Timer.getFPGATimestamp() - timestamp) < 5 && (gameData == null || gameData.isEmpty())) {
+            gameData = DriverStation.getInstance().getGameSpecificMessage();
+        }
+        if (gameData == null || gameData.isEmpty()) {//If there is no field data run mobility
+            //autonCommand = new MobilityAutonCommand();
+            System.err.print("******* Field Data Problem!!!");
+            System.err.println("Please yell at the field management crew to fix this");
+        } else {
+            isRobotOnRight = (sideChooser.getSelected() == RobotStartPosition.RIGHT_SIDE_OF_DRIVER);
+            System.out.println(
+                    "[Robot] SIDE CHOOSER: " + sideChooser.getSelected() + ", equals right? " + isRobotOnRight);
+            isAllianceSwitchRight = gameData.charAt(0) == 'R';
+            isScaleRight = gameData.charAt(1) == 'R';
+            autonCommand = autonChooser.getSelected();
+        }
+
+        if (autonCommand != null) {
+            System.out.println("[Robot] SELECTED AUTON: " + autonCommand.getName());
+            autonCommand.start();
+        }
 	}
 
 	@Override
@@ -46,6 +92,9 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
+		if (autonCommand != null) {
+			autonCommand.cancel();
+		}
 	}
 
 	@Override
@@ -56,4 +105,36 @@ public class Robot extends TimedRobot {
 	@Override
 	public void testPeriodic() {
 	}
+	
+	   public static boolean isRobotStartingOnRight() {
+	        return isRobotOnRight;
+	    }
+
+	    public static boolean isSwitchOnRight() {
+	        return isAllianceSwitchRight;
+	    }
+
+	    public static boolean isScaleOnRight() {
+	        return isScaleRight;
+	    }
+
+	    public static boolean isRobotOnSameSideScale() {
+	        return !(isRobotOnRight ^ isScaleRight);
+	    }
+
+	    public static boolean isSwitchOnSameSideScale() {
+	        return !(isAllianceSwitchRight ^ isScaleRight);
+	    }
+
+	    public static boolean isRobotSwitchScaleOnSameSide() {
+	        return isRobotOnSameSideScale() && isSwitchOnSameSideScale();
+	    }
+
+	    public static boolean isRobotOnSameSideSwitch() {
+	        return !(isRobotOnRight ^ isAllianceSwitchRight);
+	    }
+
+	    public static Robot getInstance() {
+	        return myInstance;
+	    }
 }

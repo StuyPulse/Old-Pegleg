@@ -7,19 +7,17 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 /**
  *
  */
-public class ArmToggleCommand extends InstantCommand {
+public class ArmCloseCommand extends InstantCommand {
 
-    public ArmToggleCommand() {
+    public ArmCloseCommand() {
         requires(Robot.arm);
     }
 
     protected void initialize() {
-    		if (Robot.arm.isOpen) {
-    			Robot.arm.close();
-    		} else {
-    			Robot.arm.open();
-    		}
-    		Robot.arm.isOpen = !(Robot.arm.isOpen);
+    		Robot.arm.close();
     }
 
+    protected void end() {
+    }
+    
 }

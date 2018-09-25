@@ -51,5 +51,11 @@ public class Drivetrain extends Subsystem {
     		differentialDrive.arcadeDrive(speed, turn, true);
     }
     
+    public void setRamp(double rampSeconds) {
+    		leftTopMotor.configOpenloopRamp(rampSeconds, 0);
+    		leftBottomMotor.configOpenloopRamp(rampSeconds, 0);
+    		rightTopMotor.configOpenloopRamp(rampSeconds, 0);
+    		rightBottomMotor.configOpenloopRamp(rampSeconds, 0);
+    }
 }
 

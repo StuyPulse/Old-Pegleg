@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ArmDeacquireCommand extends Command {
+public class ArmAcquireCommand extends Command {
 
-    public ArmDeacquireCommand() {
+    public ArmAcquireCommand() {
         requires(Robot.arm);
     }
 
@@ -17,7 +17,7 @@ public class ArmDeacquireCommand extends Command {
     }
 
     protected void execute() {
-    		Robot.arm.setSpeed(-1);
+    		Robot.arm.setSpeed(1);
     }
 
     protected boolean isFinished() {
