@@ -24,13 +24,13 @@ public class OI {
         driverGamepad = new Gamepad(RobotMap.GAMEPAD_DRIVER_PORT, GamepadSwitchMode.PS4);
         operatorGamepad = new Gamepad(RobotMap.GAMEPAD_OPERATOR_PORT, GamepadSwitchMode.SWITCH_X);
 
-        operatorGamepad.getLeftTrigger().whileHeld(new ArmDeacquireCommand());
         operatorGamepad.getRightTrigger().whileHeld(new ArmAcquireCommand());
+        operatorGamepad.getRightBumper().whileHeld(new ArmDeacquireCommand());
         
-        operatorGamepad.getLeftButton().whenPressed(new ArmOpenCommand());
-        operatorGamepad.getRightButton().whenPressed(new ArmCloseCommand());
+        operatorGamepad.getLeftTrigger().whenPressed(new ArmCloseCommand());
+        operatorGamepad.getLeftBumper().whenPressed(new ArmOpenCommand());
         
-        operatorGamepad.getLeftBumper().whenPressed(new ArmUpCommand());
-        operatorGamepad.getRightBumper().whenPressed(new ArmDownCommand());
+        operatorGamepad.getTopButton().whenPressed(new ArmUpCommand());
+        operatorGamepad.getBottomButton().whenPressed(new ArmDownCommand());
     }
 }

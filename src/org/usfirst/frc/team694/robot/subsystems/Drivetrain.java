@@ -2,6 +2,7 @@ package org.usfirst.frc.team694.robot.subsystems;
 
 import org.usfirst.frc.team694.robot.RobotMap;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -27,6 +28,12 @@ public class Drivetrain extends Subsystem {
     		
     		leftBottomMotor.follow(leftTopMotor);
     		rightBottomMotor.follow(rightTopMotor);
+    		
+    		leftBottomMotor.setNeutralMode(NeutralMode.Brake);
+    		rightBottomMotor.setNeutralMode(NeutralMode.Brake);
+    		leftTopMotor.setNeutralMode(NeutralMode.Brake);
+    		leftTopMotor.setNeutralMode(NeutralMode.Brake);
+
     		
     		differentialDrive = new DifferentialDrive(leftTopMotor, rightTopMotor);
     }
@@ -57,5 +64,6 @@ public class Drivetrain extends Subsystem {
     		rightTopMotor.configOpenloopRamp(rampSeconds, 0);
     		rightBottomMotor.configOpenloopRamp(rampSeconds, 0);
     }
+    
 }
 
