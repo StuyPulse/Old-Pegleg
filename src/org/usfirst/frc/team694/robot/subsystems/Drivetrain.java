@@ -4,8 +4,8 @@ import org.usfirst.frc.team694.robot.Robot;
 import org.usfirst.frc.team694.robot.RobotMap;
 import org.usfirst.frc.team694.robot.commands.DrivetrainDriveCommand;
 
-import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
@@ -14,10 +14,10 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
  */
 public class Drivetrain extends Subsystem {
 	
-	private PWMVictorSPX leftTopMotor;
-    private PWMVictorSPX leftBottomMotor;
-    private PWMVictorSPX rightTopMotor;
-    private PWMVictorSPX rightBottomMotor;
+	private VictorSP leftTopMotor;
+    private VictorSP leftBottomMotor;
+    private VictorSP rightTopMotor;
+    private VictorSP rightBottomMotor;
     
     private SpeedControllerGroup leftMotors;
     private SpeedControllerGroup rightMotors;
@@ -26,10 +26,10 @@ public class Drivetrain extends Subsystem {
     
     
     public Drivetrain() {
-    		leftTopMotor = new PWMVictorSPX(RobotMap.DRIVETRAIN_LEFT_TOP_MOTOR);
-    		leftBottomMotor = new PWMVictorSPX(RobotMap.DRIVETRAIN_LEFT_BOTTOM_MOTOR);
-    		rightTopMotor = new PWMVictorSPX(RobotMap.DRIVETRAIN_RIGHT_TOP_MOTOR);
-    		rightBottomMotor = new PWMVictorSPX(RobotMap.DRIVETRAIN_RIGHT_BOTTOM_MOTOR);
+    		leftTopMotor = new VictorSP(RobotMap.DRIVETRAIN_LEFT_TOP_MOTOR);
+    		leftBottomMotor = new VictorSP(RobotMap.DRIVETRAIN_LEFT_BOTTOM_MOTOR);
+    		rightTopMotor = new VictorSP(RobotMap.DRIVETRAIN_RIGHT_TOP_MOTOR);
+    		rightBottomMotor = new VictorSP(RobotMap.DRIVETRAIN_RIGHT_BOTTOM_MOTOR);
     		
 //    		leftBottomMotor.follow(leftTopMotor);
 //    		rightBottomMotor.follow(rightTopMotor);
