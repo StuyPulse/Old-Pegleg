@@ -21,7 +21,7 @@ public class OI {
     public Gamepad operatorGamepad;
 
     public OI() {
-        driverGamepad = new Gamepad(RobotMap.GAMEPAD_DRIVER_PORT, GamepadSwitchMode.PS4);
+        driverGamepad = new Gamepad(RobotMap.GAMEPAD_DRIVER_PORT, GamepadSwitchMode.SWITCH_D);
         operatorGamepad = new Gamepad(RobotMap.GAMEPAD_OPERATOR_PORT, GamepadSwitchMode.SWITCH_X);
 
         operatorGamepad.getRightTrigger().whileHeld(new ArmAcquireCommand());
