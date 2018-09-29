@@ -13,9 +13,13 @@ public class TurnForSecondsCommand extends Command {
 	double startTime = Timer.getFPGATimestamp();
 	double speed;
 	double time;
+	
+	double leftSpeed;
+	double rightSpeed;
 
-    public TurnForSecondsCommand(double speed, double time) {
-    		
+    public TurnForSecondsCommand(double leftSpeed, double rightSpeed) {
+    	this.leftSpeed = leftSpeed;
+    	this.rightSpeed = rightSpeed;
         requires(Robot.drivetrain);
     }
 
@@ -23,7 +27,7 @@ public class TurnForSecondsCommand extends Command {
     }
 
     protected void execute() {
-    		Robot.drivetrain.arcadeDrive(0, speed);
+    		Robot.drivetrain.tankDrive(leftSpeed, rightSpeed);
     		
     }
 
