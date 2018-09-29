@@ -13,11 +13,9 @@ public class ArmCloseCommand extends InstantCommand {
         requires(Robot.arm);
     }
 
+    @Override
     protected void initialize() {
     		Robot.arm.close();
-    }
-
-    protected void end() {
     }
     
 }

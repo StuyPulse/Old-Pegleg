@@ -21,16 +21,28 @@ public class Arm extends Subsystem {
 
     public Arm() {
     		motor = new WPI_TalonSRX(RobotMap.ARM_MOTOR);
-    		
     		intakeSolenoid = new Solenoid(RobotMap.ARM_INTAKE_SOLENOID);
     		elevationSolenoid = new Solenoid(RobotMap.ARM_ELEVATION_SOLENOID);
     }
     
     public void initDefaultCommand() {
+    	
     }
     
     public double getSpeed() {
     		return motor.getSelectedSensorVelocity(0);
+    }
+    
+    public void acquire() {
+    	motor.set(1);
+    }
+    
+    public void deacquire() {
+    	motor.set(-1);
+    }
+    
+    public void stop() {
+    	motor.set(0);
     }
     
     public void setSpeed(double speed) {
@@ -46,11 +58,10 @@ public class Arm extends Subsystem {
     }
     
     public void up() {
-    		elevationSolenoid.set(true);
-    }
-    
-    public void down() {
     		elevationSolenoid.set(false);
+    }
+    public void down() {
+    		elevationSolenoid.set(true);
     }
 }
 

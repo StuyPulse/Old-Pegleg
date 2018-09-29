@@ -17,7 +17,7 @@ public class ArmDeacquireCommand extends Command {
     }
 
     protected void execute() {
-    		Robot.arm.setSpeed(-1);
+    		Robot.arm.deacquire();
     }
 
     protected boolean isFinished() {
@@ -25,9 +25,10 @@ public class ArmDeacquireCommand extends Command {
     }
 
     protected void end() {
-    		Robot.arm.setSpeed(0);
+    		Robot.arm.stop();
     }
 
     protected void interrupted() {
+    	Robot.arm.stop();
     }
 }

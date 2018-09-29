@@ -20,16 +20,17 @@ public class OI {
     public Gamepad driverGamepad;
     public Gamepad operatorGamepad;
 
-    public OI() {
+    public OI(
+    		) {
         driverGamepad = new Gamepad(RobotMap.GAMEPAD_DRIVER_PORT, GamepadSwitchMode.SWITCH_D);
-        operatorGamepad = new Gamepad(RobotMap.GAMEPAD_OPERATOR_PORT, GamepadSwitchMode.SWITCH_X);
+        operatorGamepad = new Gamepad(RobotMap.GAMEPAD_OPERATOR_PORT, GamepadSwitchMode.SWITCH_D);
 
         operatorGamepad.getRightTrigger().whileHeld(new ArmAcquireCommand());
         operatorGamepad.getRightBumper().whileHeld(new ArmDeacquireCommand());
         
         operatorGamepad.getLeftTrigger().whenPressed(new ArmCloseCommand());
         operatorGamepad.getLeftBumper().whenPressed(new ArmOpenCommand());
-        
+         
         operatorGamepad.getTopButton().whenPressed(new ArmUpCommand());
         operatorGamepad.getBottomButton().whenPressed(new ArmDownCommand());
     }

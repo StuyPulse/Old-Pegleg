@@ -13,6 +13,7 @@ public class ArmUpCommand extends InstantCommand {
         requires(Robot.arm);
     }
 
+    @Override
     protected void initialize() {
     		Robot.arm.up();
     }

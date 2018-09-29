@@ -40,11 +40,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 	    private static SendableChooser<RobotStartPosition> sideChooser = new SendableChooser<>();
 	
 	    private Command autonCommand; 
-	    
+	    double rightJoystickY;
+		double leftJoystickY;
 		@Override
 		public void robotInit() {
 			drivetrain = new Drivetrain();
 			arm = new Arm();
+			oi = new OI();
 			
 			initSmartDashboard();
 		}
@@ -59,22 +61,20 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 		}
 	
 		@Override
-		public void disabledPeriodic() {
+		public void disabledPeriodic()
+		{
 			Scheduler.getInstance().run();
 		}
 		
 		private void initSmartDashboard() {
-			autonChooser.addDefault("Do Nothing", new CommandGroup());
-			autonChooser.addObject("Mobility", new DriveForwardForeverAutonCommand());
-			autonChooser.addObject("Single Switch", new SingleSwitchAutonChooserCommand());
+//			autonChooser.addDefault("Do Nothing", new CommandGroup());
+//			autonChooser.addObject("Mobility", new DriveForwardForeverAutonCommand());
+//			autonChooser.addObject("Single Switch", new SingleSwitchAutonChooserCommand());
+//			SmartDashboard.putData("Auton?", autonChooser);
 			
-			sideChooser.addDefault("Right", RobotStartPosition.RIGHT_SIDE_OF_DRIVER);
-	        sideChooser.addObject("Left", RobotStartPosition.LEFT_SIDE_OF_DRIVER);
-	        SmartDashboard.putData("Where is the bot starting?", sideChooser);
-	        
-	        SmartDashboard.putNumber("DrivePID P", 0.016);
-	        SmartDashboard.putNumber("DrivePID I", 0);
-	        SmartDashboard.putNumber("DrivePID D", 0.08);
+//			sideChooser.addDefault("Right", RobotStartPosition.RIGHT_SIDE_OF_DRIVER);
+//	        sideChooser.addObject("Left", RobotStartPosition.LEFT_SIDE_OF_DRIVER);
+//	        SmartDashboard.putData("Where is the bot starting?", sideChooser);
 		}
 	
 		@Override
@@ -100,10 +100,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 	            autonCommand = autonChooser.getSelected();
 	        }
 	
-	        if (autonCommand != null) {
+	        if (autonCommand != null) { 
 	            System.out.println("[Robot] SELECTED AUTON: " + autonCommand.getName());
 	            autonCommand.start();
 	        }
+	        new DriveForwardForeverAutonCommand().start();
+	        
 		}
 	
 		@Override

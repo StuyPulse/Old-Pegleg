@@ -4,7 +4,7 @@ import org.usfirst.frc.team694.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
+/**`
  *
  */
 public class ArmAcquireCommand extends Command {
@@ -17,7 +17,7 @@ public class ArmAcquireCommand extends Command {
     }
 
     protected void execute() {
-    		Robot.arm.setSpeed(1);
+    		Robot.arm.acquire();
     }
 
     protected boolean isFinished() {
@@ -25,9 +25,10 @@ public class ArmAcquireCommand extends Command {
     }
 
     protected void end() {
-    		Robot.arm.setSpeed(0);
-    }
+    		Robot.arm.stop();
+    }	
 
     protected void interrupted() {
+    	Robot.arm.stop();
     }
 }

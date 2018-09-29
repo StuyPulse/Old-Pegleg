@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class DrivetrainDriveCommand extends Command {
 
+	double rightJoystickY;
+	double leftJoystickY;
     public DrivetrainDriveCommand() {
         requires(Robot.drivetrain);
     }
@@ -17,10 +19,10 @@ public class DrivetrainDriveCommand extends Command {
     }
 
     protected void execute() {
-    		double rightJoystickX = Robot.oi.driverGamepad.getRightX();
-    		double leftJoystickY = Robot.oi.driverGamepad.getLeftY();
+    		rightJoystickY = Robot.oi.driverGamepad.getRightY();
+    		leftJoystickY = Robot.oi.driverGamepad.getLeftY();
     		
-    		Robot.drivetrain.arcadeDrive(leftJoystickY, rightJoystickX);
+    		Robot.drivetrain.tankDrive(leftJoystickY, rightJoystickY);
     }
 
     protected boolean isFinished() {

@@ -13,8 +13,10 @@ public class ArmOpenCommand extends InstantCommand {
         requires(Robot.arm);
     }
 
+    @Override
     protected void initialize() {
     		Robot.arm.open();
+    		System.out.println("Opening");
     }
 
     protected void end() {

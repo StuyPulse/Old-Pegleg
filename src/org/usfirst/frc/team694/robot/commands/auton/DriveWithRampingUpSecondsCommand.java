@@ -34,8 +34,8 @@ public class DriveWithRampingUpSecondsCommand extends Command {
     		timePassed = Timer.getFPGATimestamp() - startTime;
     		speed = timePassed * RobotMap.DRIVETRAIN_TIME_TO_SPEED_MULTIPLIER;
 	        speed = Math.min(speed, targetSpeed);
-    		
-    		Robot.drivetrain.arcadeDrive(speed, 0);
+    		System.out.println("Driving");
+    		Robot.drivetrain.tankDrive(speed, speed);
     }
 
     protected boolean isFinished() {
@@ -43,7 +43,7 @@ public class DriveWithRampingUpSecondsCommand extends Command {
     }
 
     protected void end() {
-    		Robot.drivetrain.arcadeDrive(0, 0);
+    		Robot.drivetrain.tankDrive(0, 0);
     }
     
 }
