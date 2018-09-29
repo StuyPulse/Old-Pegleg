@@ -33,6 +33,7 @@ public class DriveWithRampingUpSecondsCommand extends Command {
     protected void execute() {
     		timePassed = Timer.getFPGATimestamp() - startTime;
     		speed = timePassed * RobotMap.DRIVETRAIN_TIME_TO_SPEED_MULTIPLIER;
+	        speed = Math.getMin(speed, targetSpeed);
     		
     		Robot.drivetrain.arcadeDrive(speed, 0);
     }
