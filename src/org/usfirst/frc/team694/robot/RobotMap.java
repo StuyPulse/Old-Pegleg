@@ -16,13 +16,16 @@ package org.usfirst.frc.team694.robot;
 public class RobotMap {
 	public static final int DRIVETRAIN_LEFT_TOP_MOTOR = 0;
 	public static final int DRIVETRAIN_LEFT_BOTTOM_MOTOR = 1;
-	public static final int DRIVETRAIN_RIGHT_TOP_MOTOR = 12;
-	public static final int DRIVETRAIN_RIGHT_BOTTOM_MOTOR = 13;
+	public static final int DRIVETRAIN_RIGHT_TOP_MOTOR = 2;
+	public static final int DRIVETRAIN_RIGHT_BOTTOM_MOTOR = 3;
+	
+	public static final double DRIVETRAIN_TIME_TO_SPEED_MULTIPLIER = 0.5;
 	
 	public static final int ARM_MOTOR = 2;
-	public static final int ARM_INTAKE_SOLENOID = -1;
-	public static final int ARM_ELEVATION_SOLENOID = -1;
+	public static final int ARM_INTAKE_SOLENOID = 0;
+	public static final int ARM_ELEVATION_SOLENOID = 1;
 	
-	public static final int GAMEPAD_OPERATOR_PORT = -1;
-	public static final int GAMEPAD_DRIVER_PORT = -1;
+	public static final int GAMEPAD_OPERATOR_PORT = 1;
+	public static final int GAMEPAD_DRIVER_PORT = 0;
+	
 }

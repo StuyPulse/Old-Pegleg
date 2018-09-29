@@ -10,20 +10,24 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class TurnForSecondsCommand extends Command {
 	
-	double startTime = Timer.getFPGATimestamp();
-	double speed;
 	double time;
+	
+	double leftSpeed;
+	double rightSpeed;
 
-    public TurnForSecondsCommand(double speed, double time) {
-    		
+    public TurnForSecondsCommand(double leftSpeed, double rightSpeed, double time) {
+    	this.leftSpeed = leftSpeed;
+    	this.rightSpeed = rightSpeed;
+        this.time = time;
         requires(Robot.drivetrain);
     }
 
     protected void initialize() {
+	double startTime = Timer.getFPGATimestamp();
     }
 
     protected void execute() {
-    		Robot.drivetrain.arcadeDrive(0, speed);
+    		Robot.drivetrain.tankDrive(leftSpeed, rightSpeed);
     		
     }
 
@@ -32,6 +36,6 @@ public class TurnForSecondsCommand extends Command {
     }
 
     protected void end() {
-    		Robot.drivetrain.arcadeDrive(0, 0);
+    		Robot.drivetrain.tankDrive(0, 0);
     }
 }
