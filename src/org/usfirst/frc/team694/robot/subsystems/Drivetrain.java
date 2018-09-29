@@ -64,6 +64,10 @@ public class Drivetrain extends Subsystem {
     public void arcadeDrive(double speed, double turn) {
     		differentialDrive.arcadeDrive(speed, turn, true);
     }
+    
+    public void tankDrive(double leftSpeed, double rightSpeed) {
+	    differentialDrive.tankDrive(leftSpeed, rightSpeed);
+    }
    
 }
 
