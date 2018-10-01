@@ -12,6 +12,8 @@ public class TurnForSecondsCommand extends Command {
 	
 	double time;
 	
+	double startTime;
+	
 	double leftSpeed;
 	double rightSpeed;
 
@@ -23,7 +25,7 @@ public class TurnForSecondsCommand extends Command {
     }
 
     protected void initialize() {
-	double startTime = Timer.getFPGATimestamp();
+    	startTime = Timer.getFPGATimestamp();
     }
 
     protected void execute() {
