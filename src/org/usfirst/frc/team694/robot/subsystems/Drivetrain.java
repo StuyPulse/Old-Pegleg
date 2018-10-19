@@ -61,13 +61,19 @@ public class Drivetrain extends Subsystem {
     		return Math.max(Math.abs(getLeftSpeed()), Math.abs(getRightSpeed()));
     }
     
+    public void curvatureDrive(double speed, double turn, boolean quickTurn) {
+    		differentialDrive.curvatureDrive(speed, turn, quickTurn);
+    }
+    
     public void arcadeDrive(double speed, double turn) {
     		differentialDrive.arcadeDrive(speed, turn, true);
     }
     
     public void tankDrive(double leftSpeed, double rightSpeed) {
-	    differentialDrive.tankDrive(leftSpeed, rightSpeed);
+	    	differentialDrive.tankDrive(leftSpeed, rightSpeed);
     }
+    
+    
    
 }
 

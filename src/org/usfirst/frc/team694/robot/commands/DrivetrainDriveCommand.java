@@ -19,10 +19,16 @@ public class DrivetrainDriveCommand extends Command {
     protected void execute() {
     		double rightJoystickX = Robot.oi.driverGamepad.getRightX();
     		double leftJoystickY = Robot.oi.driverGamepad.getLeftY();
-    		
-    		Robot.drivetrain.arcadeDrive(leftJoystickY, rightJoystickX);
+    		double rightJoystickXSquared = Math.signum(rightJoystickX) * Math.pow(rightJoystickX, 2);
+    		double leftJoystickYSquared = Math.signum(leftJoystickY) * Math.pow(leftJoystickY, 2);
+    		boolean quickTurn = false;
+    		if (leftJoystickY >= -0.3 || leftJoystickY <= 0.3) {
+    			quickTurn = true;
+    		}
+    		Robot.drivetrain.curvatureDrive(leftJoystickY, rightJoystickX, quickTurn);
     }
 
+  
     protected boolean isFinished() {
         return false;
     }
