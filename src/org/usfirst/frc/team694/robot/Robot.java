@@ -43,6 +43,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 	    
 		@Override
 		public void robotInit() {
+			oi = new OI();
 			drivetrain = new Drivetrain();
 			arm = new Arm();
 			
