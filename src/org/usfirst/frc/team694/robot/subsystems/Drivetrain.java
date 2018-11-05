@@ -4,6 +4,8 @@ import org.usfirst.frc.team694.robot.Robot;
 import org.usfirst.frc.team694.robot.RobotMap;
 import org.usfirst.frc.team694.robot.commands.DrivetrainDriveCommand;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -33,7 +35,7 @@ public class Drivetrain extends Subsystem {
     		
 //    		leftBottomMotor.follow(leftTopMotor);
 //    		rightBottomMotor.follow(rightTopMotor);
-//    		
+    		
 //    		leftBottomMotor.setNeutralMode(NeutralMode.Brake);
 //    		rightBottomMotor.setNeutralMode(NeutralMode.Brake);
 //    		leftTopMotor.setNeutralMode(NeutralMode.Brake);
@@ -73,7 +75,9 @@ public class Drivetrain extends Subsystem {
 	    	differentialDrive.tankDrive(leftSpeed, rightSpeed);
     }
     
-    
+    public void stop() {
+    		differentialDrive.stopMotor();
+    }
    
 }
 
