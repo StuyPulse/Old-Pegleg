@@ -46,6 +46,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 			drivetrain = new Drivetrain();
 			arm = new Arm();
 			
+			oi = new OI();
+			
 			initSmartDashboard();
 		}
 		
@@ -75,6 +77,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 	        SmartDashboard.putNumber("DrivePID P", 0.016);
 	        SmartDashboard.putNumber("DrivePID I", 0);
 	        SmartDashboard.putNumber("DrivePID D", 0.08);
+	        
+	        SmartDashboard.putBoolean("Random Limit Switch", Robot.drivetrain.isPressed());
 		}
 	
 		@Override
@@ -122,6 +126,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 		@Override
 		public void teleopPeriodic() {
 			Scheduler.getInstance().run();
+			Robot.drivetrain.tankDrive(0.5, 0.5);
+			
 		}
 	
 		@Override

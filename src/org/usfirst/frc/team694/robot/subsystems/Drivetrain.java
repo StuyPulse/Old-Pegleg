@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+
 /**
  *
  */
@@ -23,6 +25,8 @@ public class Drivetrain extends Subsystem {
     private SpeedControllerGroup rightMotors;
     
     private DifferentialDrive differentialDrive;
+    
+    private DigitalInput limitSwitch;
     
     
     public Drivetrain() {
@@ -43,6 +47,8 @@ public class Drivetrain extends Subsystem {
     		rightMotors = new SpeedControllerGroup(rightTopMotor, rightBottomMotor);
     		
     		differentialDrive = new DifferentialDrive(leftMotors, rightMotors);
+    		
+    		limitSwitch = new DigitalInput(RobotMap.LIMIT_SWITCH);
     }
     
     public void initDefaultCommand() {
@@ -71,9 +77,12 @@ public class Drivetrain extends Subsystem {
     
     public void tankDrive(double leftSpeed, double rightSpeed) {
 	    	differentialDrive.tankDrive(leftSpeed, rightSpeed);
+	    	
     }
     
-    
+    public boolean isPressed() {
+    	return limitSwitch.get();
+    }
    
 }
 
