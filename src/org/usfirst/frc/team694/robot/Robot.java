@@ -7,16 +7,15 @@
 	
 	package org.usfirst.frc.team694.robot;
 	
-import org.usfirst.frc.team694.robot.commands.auton.choosers.SingleSwitchAutonChooserCommand;
+import org.usfirst.frc.team694.robot.commands.auton.routines.DifferentSideSwitchAutonCommand;
 import org.usfirst.frc.team694.robot.commands.auton.routines.DriveForwardForeverAutonCommand;
+import org.usfirst.frc.team694.robot.commands.auton.routines.SameSideSwitchAutonCommand;
 import org.usfirst.frc.team694.robot.subsystems.Arm;
 import org.usfirst.frc.team694.robot.subsystems.Drivetrain;
+import org.usfirst.frc.team694.util.InfraredLightBeamDetectionUnit;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -27,31 +26,48 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 	
 		public static Drivetrain drivetrain;
 		public static Arm arm;
+		
+		public static InfraredLightBeamDetectionUnit irSensor;
 	
 		public static OI oi;
+		public static SendableChooser<Command> autonChooser;
 		
 		private String gameData;
 	    private static boolean isRobotOnRight;
 	    private static boolean isAllianceSwitchRight;
 	    private static boolean isScaleRight;
 	    private static boolean isInTeleop;
-	
-	    private static SendableChooser<Command> autonChooser = new SendableChooser<>();
-	    private static SendableChooser<RobotStartPosition> sideChooser = new SendableChooser<>();
-	
-	    private Command autonCommand; 
 	    
 		@Override
 		public void robotInit() {
 			drivetrain = new Drivetrain();
 			arm = new Arm();
+			irSensor = new InfraredLightBeamDetectionUnit();
+			
+			autonChooser = new SendableChooser<>();
 			
 			initSmartDashboard();
 		}
 		
+		public void robotPeriodic(){
+			updateSmartDashboard();
+		}
 		public enum RobotStartPosition {
 			RIGHT_SIDE_OF_DRIVER, LEFT_SIDE_OF_DRIVER
 		}
+		
+		public void initSmartDashboard(){
+			autonChooser.addDefault("infinite drive forward", new DriveForwardForeverAutonCommand());
+			autonChooser.addObject("same side switch", new SameSideSwitchAutonCommand());
+			autonChooser.addObject("different side switch", new DifferentSideSwitchAutonCommand(true));
+			
+			SmartDashboard.putData(autonChooser);
+		}
+		
+		public void updateSmartDashboard(){
+			SmartDashboard.putNumber("The Value We Have Gathered Using the Technology of The Infrared light Beam Echolocator Device that is located on the Robot that is Made By Team 694 from Stuyvesant High School in New York City", irSensor.getRawValue());
+		}
+
 	
 		@Override
 		public void disabledInit() {
@@ -62,48 +78,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 		public void disabledPeriodic() {
 			Scheduler.getInstance().run();
 		}
-		
-		private void initSmartDashboard() {
-			autonChooser.addDefault("Do Nothing", new CommandGroup());
-			autonChooser.addObject("Mobility", new DriveForwardForeverAutonCommand());
-			autonChooser.addObject("Single Switch", new SingleSwitchAutonChooserCommand());
-			
-			sideChooser.addDefault("Right", RobotStartPosition.RIGHT_SIDE_OF_DRIVER);
-	        sideChooser.addObject("Left", RobotStartPosition.LEFT_SIDE_OF_DRIVER);
-	        SmartDashboard.putData("Where is the bot starting?", sideChooser);
-	        
-	        SmartDashboard.putNumber("DrivePID P", 0.016);
-	        SmartDashboard.putNumber("DrivePID I", 0);
-	        SmartDashboard.putNumber("DrivePID D", 0.08);
-		}
 	
 		@Override
 		public void autonomousInit() {
-			Scheduler.getInstance().removeAll();
-	        isInTeleop = false;
-			gameData = null;
-	
-	        double timestamp = Timer.getFPGATimestamp();
-	        while ((Timer.getFPGATimestamp() - timestamp) < 5 && (gameData == null || gameData.isEmpty())) {
-	            gameData = DriverStation.getInstance().getGameSpecificMessage();
-	        }
-	        if (gameData == null || gameData.isEmpty()) {//If there is no field data run mobility
-	            //autonCommand = new MobilityAutonCommand();
-	            System.err.print("******* Field Data Problem!!!");
-	            System.err.println("Please yell at the field management crew to fix this");
-	        } else {
-	            isRobotOnRight = (sideChooser.getSelected() == RobotStartPosition.RIGHT_SIDE_OF_DRIVER);
-	            System.out.println(
-	                    "[Robot] SIDE CHOOSER: " + sideChooser.getSelected() + ", equals right? " + isRobotOnRight);
-	            isAllianceSwitchRight = gameData.charAt(0) == 'R';
-	            isScaleRight = gameData.charAt(1) == 'R';
-	            autonCommand = autonChooser.getSelected();
-	        }
-	
-	        if (autonCommand != null) {
-	            System.out.println("[Robot] SELECTED AUTON: " + autonCommand.getName());
-	            autonCommand.start();
-	        }
+			autonChooser.getSelected().start();
 		}
 	
 		@Override
@@ -114,9 +92,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 		@Override
 		public void teleopInit() {
 			isInTeleop = true;
-			if (autonCommand != null) {
-				autonCommand.cancel();
-			}
+			autonChooser.getSelected().cancel();
 		}
 	
 		@Override

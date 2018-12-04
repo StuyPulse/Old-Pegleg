@@ -28,4 +28,5 @@ public class RobotMap {
 	public static final int GAMEPAD_OPERATOR_PORT = 1;
 	public static final int GAMEPAD_DRIVER_PORT = 0;
 	
+	public static final int INFRARED_LIGHT_BEAM_DETECTION_UNIT_PORT = 0;
 }
